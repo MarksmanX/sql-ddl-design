@@ -10,8 +10,6 @@ CREATE DATABASE air_traffic;
 CREATE TABLE tickets
 (
   id SERIAL PRIMARY KEY,
-  first_name TEXT NOT NULL,
-  last_name TEXT NOT NULL,
   seat TEXT NOT NULL,
   departure TIMESTAMP NOT NULL,
   arrival TIMESTAMP NOT NULL,
@@ -21,6 +19,13 @@ CREATE TABLE tickets
   to_city TEXT NOT NULL,
   to_country TEXT NOT NULL
 );
+
+CREATE TABLE passengers (
+  id SERIAL PRIMARY KEY,
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL,
+  ticket_id INTEGER REFERENCES tickets
+)
 
 INSERT INTO tickets
   (first_name, last_name, seat, departure, arrival, airline, from_city, from_country, to_city, to_country)

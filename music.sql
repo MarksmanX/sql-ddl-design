@@ -7,16 +7,56 @@ CREATE DATABASE music;
 
 \c music
 
+CREATE TABLE albums (
+  id SERIAL PRIMARY KEY,
+  title TEXT
+);
+
 CREATE TABLE songs
 (
   id SERIAL PRIMARY KEY,
   title TEXT NOT NULL,
   duration_in_seconds INTEGER NOT NULL,
   release_date DATE NOT NULL,
-  artists TEXT[] NOT NULL,
-  album TEXT NOT NULL,
-  producers TEXT[] NOT NULL
+  album_ID INTEGER REFERENCES albums(id),
 );
+
+CREATE TABLE artists (
+  id SERIAL PRIMARY KEY,
+  name TEXT
+);
+
+CREATE TABLE recordings (
+  id SERIAL PRIMARY KEY,
+  artist_id INTEGER REFERENCES artists(id),
+  song_id INTEGER REFERENCES songs(id)
+);
+
+CREATE TABLE producers (
+  id SERIAL PRIMARY KEY,
+  name TEXT
+);
+
+CREATE TABLE songs_producers (
+  id SERIAL PRIMARY KEY,
+  song_id INTEGER REFERENCES songs(id),
+  producer_id INTEGER REFERENCES producers(id)
+);
+
+INSERT INTO albums
+  (title)
+VALUES 
+  ('Middle of Nowhere'),
+  ('A Night at the Opera'),
+  ('Daydream'),
+  ('A Star Is Born'),
+  ('Silver Side Up'),
+  ('The Blueprint 3'),
+  ('Prism'),
+  ('Hands All Over'),
+  ('Let Go'),
+  ('The Writing''s on the Wall');
+
 
 INSERT INTO songs
   (title, duration_in_seconds, release_date, artists, album, producers)
